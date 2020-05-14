@@ -91,6 +91,8 @@ def main():
     regex = re.compile('ETIME|_START_|_END_|ERROR')
     regex_etime = re.compile('ETIME')
     regex_start = re.compile('_START_')
+
+    count = 0
     
     df = pd.DataFrame(columns=['birth', 'job_num', 'step', 'elapsed'])
     job_num = 0;
@@ -112,6 +114,10 @@ def main():
                 m = re.split(',', line)
                 #  0                          1        2                        3       4     5        6
                 # ['2020-05-0715:47:25:590', 'DEBUG', 'MultiTalkGroupManager', 'ETIME', 'G', '18114', 'searchSortOrders'] 
+                if m[5] == '0':
+                    count += 1
+                    # print('\n %d\n' % (count))
+                    continue
                 elapsed = float(m[5])/1000
                 if m[4] == 'A' :
                     job_num = job_num + 1
